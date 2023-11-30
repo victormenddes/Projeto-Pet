@@ -1,0 +1,99 @@
+
+1ª Passo:
+install -->   [npm init - y] instalar package.jason
+              [tsc --init] arquivo de configuração do TypeScript
+                - configurar "target": "es6"
+                - "module": "commonjs"
+                - "rootDir": "./src"
+                - "outDir": "./dist"
+                - "moduleResolution": "node"
+              [Instalar as dependencias: 
+                npm install express - framework-Node.Js
+                           mustache-express - template views
+                           dotenv - variaveis de ambientes(porta de comunicação)
+              ]
+              [Instalar as depedencias de dev-desenvolvimento(Types@):
+                npm install --save-dev @types/express @types/mustache-express @types/node 
+              ]
+
+---------------------------------------------------------------------------------------
+OBS: Para projeto rodar no PC - temos que ter 3 serviços instalados globalmente:
+  - Nodemon
+  - TypeScript
+  - ts-node
+  Instalar --> [npm install -g nodemon typescript ts-node]
+
+2ª Passo:
+- Criar pasta 'src' -> dentro da pasta 'src' criar arquivo 'server.ts'
+- No "package.json" configurar 'script':
+    - "start-dev": "nodemon -e ts, json, mustache src/server.ts"
+    - Para rodar no terminal --> npm run start-dev
+
+---------------------------------------------------------------------------------------
+3ª Passo: Criando servidor
+  - import express  from "express"
+  - import dotenv from "dotenv"
+  - import mustache from "mustache-express"
+  - import path from "path"
+
+  - dotenv.config() -> configurar dotenv
+  - criar um arquivo .env -> Nesse arquivo configurar a porta 'PORT=3000'
+  
+- Configura 'server' para poder rodar o servidor:
+     -> const server = express()
+
+- Configurar o mustache:
+    -> server.set('view engine', 'mustache') -> as views vão ser os 'mutache'
+    -> server.set('views', path.join(__dirname, 'views')) -> aonde vao estar a pasta das 'views'
+          -> dentro da pasta 'src' criar uma pasta chamada 'views' 
+    -> server.engine('mustache', mustache()) -> setar a função 'mustache' para rodar
+
+- Configurar a 'pasta publica'
+    - criar uma pasta(fora do src) chamada 'public' --> aonde os arquivos html/css/imgs
+    - server.use(express.static(path.join(__dirname, '../public'))) caminho ate pasta
+
+- Rodar o servidor:
+    -server.listen(process.env.PORT)
+
+--> SERVIDOR 4 ITENS CONFIGURADOS:
+    - dotenv -> variaveis de ambientes
+    - servidor 'express' configurado
+    - mustache setado
+    - pasta 'publica estatica' 
+
+- Criar uma pasta(fora do src) 'pasta auxiliar' chamado '_html' aonde iremos colocar  nossos arquivos 'html'
+  - fazer dowloud dos arquivos(template pronto) 
+  - colocar as 'imagens e css' dentro da pasta 'public'
+  - ficar na pasta 'html' apenas o codigo 'html'
+
+---------------------------------------------------------------------------------------
+COMEÇANDO O PROJETO - MÃO NA MASSA:
+4ª Passo - Criando as 'rotas' e as 'funções' no controllers
+- Criar uma pasta dentro 'src' chamado 'routers'
+- Criar um arquivo dentro da pasta 'routers' chamado 'index.ts'
+    - importar 'Router' de express
+    OBS: No projeto tem no total 5 rotas para criar(4-Menus e 1-pesquisa):
+        - rota para todas as paginas
+        - rota para paginas dos 'dogs' -> cachorros
+        - rota para paginas dos 'cats' -> gatos
+        - rota para paginas dos 'fishes' -> peixes
+        - rota para paginas de 'pesquisa' -> pesquisar os animais  
+        
+- Criar as pastas dentro da pasta 'src':
+    - controllers
+        - criar um arquivos chamado paginas_contrller.ts
+        - criar um arquivos chamado pesquisa_controller.ts
+    OBS: No projeto vão ter 2 'Contrllers'(1-pages/menu e 1-pesquisa)
+
+- Na pasta 'views' Criar 2 pastas:
+  - 1 pasta chamado de 'paginas'
+      - dentro da pasta 'paginas' criar 
+  - 1 pasta chamado de 'parcial'
+      - dentro da pasta 'parcial' criar 2 arquivos:
+          - 1 arquivo chamado 'cabeçalho.mustache'
+              - colocar o cabeçalho do 'html' no arquivo
+          - 1 arquivo chamado 'rodape.mustache'
+              - colocar o rodape do 'html' no arquivo
+
+
+    - models
